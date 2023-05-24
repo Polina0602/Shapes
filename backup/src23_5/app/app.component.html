@@ -1,0 +1,19 @@
+<h1>Angular Shape Project</h1>
+<shape [lines]="lines"></shape>
+<div>
+  <h2>Select Color:</h2>
+  <div>
+    <button (click)="selectColor('red'); toggleActive('button1')" [class.active]="selectedButtonId === 'button1'">Red</button>
+    <button (click)="selectColor('green'); toggleActive('button2')" [class.active]="selectedButtonId === 'button2'">Green</button>
+    <button (click)="selectColor('blue'); toggleActive('button3')" [class.active]="selectedButtonId === 'button3'">Blue</button>
+    <button (click)="selectColor('yellow'); toggleActive('button4')" [class.active]="selectedButtonId === 'button4'">Yellow</button>
+  </div>
+</div>
+
+<div>
+  <h2>Select Shape:</h2>
+  <div>
+    <button (click)="selectShape('shape1'); selectColor('black')" class="btn btn-primary">Square</button>
+
+  </div>
+</div>

@@ -1,0 +1,24 @@
+<h1>Shapes</h1>
+<shape [lines]="lines" [selectedColor]="selectedColor"></shape>
+
+<div>
+  <h2>Select Color:</h2>
+  <div>
+    <button *ngFor="let color of colors" (click)="selectColor(color)" [class.active]="selectedColor === color">{{ color | uppercase }}</button>
+  </div>
+  
+</div>
+
+<div>
+  <h2>Select Shape:</h2>
+  <div>
+    <button *ngFor="let shape of shapes" (click)="selectShape(shape); selectedColor='black'" class="btn btn-primary">{{ shape | uppercase }}</button>
+  </div>
+ 
+</div>
+
+<div>
+  <button (click)="saveShape()">Save</button>
+  <input type="file" (change)="loadShapes($event)">
+
+</div>

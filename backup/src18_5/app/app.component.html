@@ -1,0 +1,19 @@
+<h1>Angular Shape Project</h1>
+<shape [lines]="lines"></shape>
+<div>
+  <h2>Select Color:</h2>
+  <div>
+    <button (click)="selectColor('red')">Red</button>
+    <button (click)="selectColor('green')">Green</button>
+    <button (click)="selectColor('blue')">Blue</button>
+    <button (click)="selectColor('yellow')">Yellow</button>
+  </div>
+</div>
+
+<div>
+  <h2>Select Shape:</h2>
+  <div>
+    <button (click)="selectShape('shape1'); selectColor('black')">Square</button>
+
+  </div>
+</div>
