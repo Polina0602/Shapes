@@ -9,3 +9,12 @@
     position: absolute;
     border: 1px solid #000;
   }
+
+  .allshapes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+
+
+

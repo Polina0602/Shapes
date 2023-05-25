@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Line } from '../models/line.model';
 
-
 @Component({
   selector: 'shape',
   templateUrl: './shape.component.html',
@@ -10,6 +9,10 @@ import { Line } from '../models/line.model';
 export class ShapeComponent {
   @Input() lines: Line[] = [];
   @Input() selectedColor: string = '';
+
+  getLineStroke(line: Line): string {
+    return line.color || this.selectedColor;
+  }
 
   getWidth(): number {
     if (this.lines.length > 0) {
@@ -27,3 +30,4 @@ export class ShapeComponent {
     return 0;
   }
 }
+

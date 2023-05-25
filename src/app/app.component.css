@@ -17,3 +17,16 @@ button.active {
     background-color: #3008c1;
     color: #fff;
 }
+
+.selected {
+    padding: 20px;
+    background-color: aquamarine;
+  }
+
+.allshapes{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+}
