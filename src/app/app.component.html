@@ -1,24 +1,25 @@
+
 <h1>Shapes</h1>
-<!-- <shape [lines]="lines" [selectedColor]="selectedColor"></shape> -->
 
 <div class="allshapes">
-  <shape *ngFor="let shape of shapes"
-        [lines]="shape.lines"
-        [selectedColor]="getShapeColor(shape.id)"
-        (click)="selectShape(shape.id)"
-        [class.selected]="shape.id === selectedShapeId">
-  </shape>
+    <shape *ngFor="let shape of shapes"
+          [lines]="shape.lines"
+          [selectedColor]="getShapeColor(shape.id)"
+          (click)="selectShape(shape.id)"
+          [class.selected]="shape.id === selectedShapeId">
+    </shape>
 </div>
 
 
-<div>
+<div class="colors">
   <h2>Select Color:</h2>
   <div>
-    <button *ngFor="let color of colors" (click)="selectColor(color)" [class.active]="selectedColor === color">{{ color | uppercase }}</button>
+    <p-button *ngFor="let color of colors" (click)="selectColor(color)" [class.active]="selectedColor === color">{{ color | uppercase }}</p-button>
   </div>
 </div>
 
 <div>
-  <button (click)="saveShape()">Save</button>
-  <input type="file" (change)="loadShapes($event)">
+  <p-button (click)="saveShape()" styleClass="p-button-raised p-button-text">Save shape</p-button>
+  <p-button (click)="loadShapes()" styleClass="p-button-raised p-button-text">Load shapes</p-button>
+
 </div>

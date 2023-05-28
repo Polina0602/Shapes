@@ -1,6 +1,6 @@
 
-button{
-    margin: 10px;
+/* button{
+    margin: 0 10px;
     padding: 10px;
     border-radius: 5px;
     border: 1px solid #ccc;
@@ -16,11 +16,19 @@ button{
 button.active {
     background-color: #3008c1;
     color: #fff;
+} */
+
+.p-button {
+    margin:0 10px
+}
+
+p-button {
+    margin: 10px
 }
 
 .selected {
     padding: 20px;
-    background-color: aquamarine;
+    border: 3px solid #4207e3;
   }
 
 .allshapes{
@@ -29,4 +37,8 @@ button.active {
     justify-content: center;
     align-items: center;
     margin: 20px;
+}
+
+.colors {
+    margin-bottom: 10px;
 }

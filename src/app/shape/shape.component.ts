@@ -29,5 +29,7 @@ export class ShapeComponent {
     }
     return 0;
   }
+
+  
 }
 

@@ -1,13 +1,18 @@
-import { Injectable } from "@angular/core";
-import { Observable, of } from "rxjs";
+import { EventEmitter, Injectable } from "@angular/core";
+import { Observable, catchError, of, tap, throwError } from "rxjs";
 import { Line } from "../models/line.model";
 import { Shape } from "../models/shape";
-import { saveAs } from 'file-saver';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ShapeService {
+
+  constructor(private http: HttpClient) { }
+
+  shapesLoaded: EventEmitter<void> = new EventEmitter<void>();
+
   shapes: Shape[] = [
     {
       id: 'square',
@@ -57,17 +62,58 @@ export class ShapeService {
     return this.shapes.find(shape => shape.id === shapeId);
   }
 
-  saveShapeToFile(shapeId: string, color: string): void {
+  saveShapeData(shapeId: string, color: string): Observable<any> {
     const shape = this.getShapeById(shapeId);
     if (shape) {
       shape.lines.forEach(line => {
         line.color = color;
       });
+  console.log('The saving shape is ', shape);
   
-      const shapesData = JSON.stringify([shape]);
-      const blob = new Blob([shapesData], { type: 'application/json' });
-      saveAs(blob, 'shapes.json');
+      const url = 'http://localhost:3000/shapes';
+      const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      const options = { headers: headers };
+  
+      return this.http.post(url, shape, options).pipe(
+        catchError(error => {
+          console.error('Failed to save shape data', error);
+          return throwError('Error saving shape data');
+        })
+      );
+    } else {
+      return throwError('Invalid shape ID');
     }
   }
+  
+  saveShapeToFile(shapeId: string, color: string): void {
+    this.saveShapeData(shapeId, color).subscribe(() => {
+      console.log('Shape data saved successfully');
+    }, error => {
+      console.error('Failed to save shape data', error);
+    });
+  }
+  
+  loadShapes(): Observable<Shape[]> {
+    const filePath = 'http://localhost:3000/shapes';
+  
+    return this.http.get<Shape[]>(filePath).pipe(
+      catchError(error => {
+        console.error('Failed to load shapes', error);
+        return throwError('Error loading shapes');
+      })
+    );
+  }
+  
+
+  loadShapesFromFile(): Observable<Shape[]> {
+    const filePath = 'http://localhost:3000/shapes';
+  
+    return this.http.get<Shape[]>(filePath);
+  }
+
+  
+  
+  
+  
 
 }

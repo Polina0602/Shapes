@@ -1,7 +1,10 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { ShapeService } from './services/shape.service';
 import { Line } from './models/line.model';
 import { Shape } from './models/shape';
+
+
+
 
 @Component({
   selector: 'app-root',
@@ -16,7 +19,7 @@ export class AppComponent {
   selectedShape: Shape | undefined;
   selectedShapeId: string = '';
 
-  constructor(private shapeService: ShapeService) {
+  constructor(private shapeService: ShapeService, private cdRef: ChangeDetectorRef) {
     this.shapes = this.shapeService.shapes.map(shape => shape.id);
   }
 
@@ -44,6 +47,8 @@ export class AppComponent {
       this.selectShape(firstShapeId);
     }
   }
+
+
 
   selectColor(color: string) {
     this.selectedColor = color;
@@ -82,20 +87,23 @@ export class AppComponent {
       this.shapeService.saveShapeToFile(this.selectedShapeId, this.selectedColor);
     }
   }
-  
-  loadShapes(event: Event): void {
-    const target = event.target as HTMLInputElement;
-    const files = target.files;
-    if (files && files.length > 0) {
-      const file = files[0];
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        const data = event.target?.result as string;
-        const loadedShapes = JSON.parse(data) as Shape[];
-        this.fetchLines(loadedShapes[0].id);
-        this.selectedColor = loadedShapes[0].lines[0]?.color || 'black';
-      };
-      reader.readAsText(file);
-    }
+
+  loadShapes(): void {
+    this.shapeService.loadShapes().subscribe(shapes => {
+      this.selectedShape = undefined;
+      this.shapes = shapes;
+      if (this.shapes.length > 0) {
+        const firstShapeId = this.shapes[0].id;
+        this.selectShape(firstShapeId);
+      }
+      this.cdRef.detectChanges();
+      }, error => {
+      console.error('Failed to load shapes', error);
+    });
   }
+  
+  
+  
+  
+  
 }
