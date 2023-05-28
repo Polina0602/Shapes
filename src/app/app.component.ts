@@ -43,8 +43,14 @@ export class AppComponent {
   showShapes() {
     this.shapes = this.shapeService.shapes;
     if (this.shapes.length > 0) {
-      const firstShapeId = this.shapes[0].id;
-      this.selectShape(firstShapeId);
+      for (let i = 0; i < this.shapes.length; i++) {
+        const shape = this.shapes[i];
+        if (shape.lines.length > 0) {
+          const firstLine = shape.lines[0];
+          this.selectShape(firstLine.shapeId);
+          break;
+        }
+      }
     }
   }
 
